@@ -1,0 +1,268 @@
+﻿@model  ERPSimplesLTE.Models.Usuario
+
+@{
+    ViewBag.Title = "Formulário";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Usuarios</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Usuarios</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- form start -->
+            <form id="frmcadastrar" method="POST" action="~/Conta/Formulario" onsubmit="javascript: return validaCampos();">
+                <!-- SELECT2 EXAMPLE -->
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title">Dados Gerais</h3>
+ 
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="nome">Nome</label>
+                                    <input type="hidden" id="id" name="id" value="@Model.Id">
+                                    <input type="text" name="nome" class="form-control" id="nome" tabindex="1" value="@Model.Nome" size="80" maxlength="80">
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group">
+                                    <label for="login">Login</label>
+                                    <input type="text" name="login" class="form-control" id="login" tabindex="2" value="@Model.Login" size="100" maxlength="100">
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" name="email" class="form-control" id="email" tabindex="3" value="@Model.Email" size="120" maxlength="120">
+                                </div>
+                                <!-- /.form-group -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="celular">Celular</label>
+                                    <input type="tel" name="celular" class="form-control" id="celular" tabindex="4" value="@Model.Celular" onkeypress="mascaratelefone(this, telefone);" onblur="mascaratelefone(this, telefone);" size="15" maxlength="15">
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group">
+                                    <label for="datacadastro">Data Cadastro</label>
+                                    <input type="datetime" name="datacadastro" class="form-control" id="datacadastro" tabindex="5" value="@Model.DataCadastro" readonly>
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group">
+                                    <label for="dataalteracao">Data Ultima Alteração</label>
+                                    <input type="datetime" name="dataalteracao" class="form-control" id="dataalteracao" tabindex="6" value="@Model.DataAlteracao" readonly>
+                                </div>
+                                <!-- /.form-group -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+
+                    </div>
+                </div>
+                <!-- /.card -->
+                <!-- SELECT2 EXAMPLE -->
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title">Dados Restritos</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="senha">Senha</label>
+                                    <input type="password" name="senha" class="form-control" id="senha" tabindex="7" value="@Model.Senha" size="12" minlength="6" maxlength="12" autocomplete="false">
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group">
+                                    <label for="senhaconfirmar">Senha Confirmar</label>
+                                    <input type="password" name="senhaconfirmar" class="form-control" tabindex="8" id="senhaconfirmar" value="@Model.SenhaConfirmar" size="12" minlength="6" maxlength="20" autocomplete="false">
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group">
+                                    <label for="ultimologin">Data Ultimo Login</label>
+                                    <input type="datetime" name="ultimologin" class="form-control" id="ultimologin" tabindex="9" value="@Model.UltimoLogin" readonly>
+                                </div>
+                                <!-- /.form-group -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-md-6">
+                                <!-- /.form-group -->
+                                <div class="form-group clearfix">
+                                    <div class="icheck-primary d-inline">
+                                        <input type="checkbox" id="supervisor" class="form-control" name="supervisor" tabindex="10" @(Model.Supervisor ? "checked='checked'" : "")>
+                                        <label for="supervisor"> Usuário supervisor</label>
+                                    </div>
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group">
+                                    @Html.Label("Situação Pagamento:")
+                                    @Html.DropDownListFor(x => Model.Situacao.Id, new SelectList(Model.Situacao.Situacoes, "Value", "Text", Model.Situacao.Id), "- Selecione -", htmlAttributes: new { @class = "form-control", @id = "situacao", tabindex = 11 })
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group">
+                                    <label for="observacao">Observação:</label>
+                                    <textarea id="observacao" name="observacao" class="form-control" rows="4" cols="50" tabindex="12" >@Model.Observacao</textarea>
+                                </div>
+                                <!-- /.form-group -->
+                                <!-- /.col -->
+                            </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        <button type="submit" id="btnGravar" name="btnGravar" tabindex="13" class="btn btn-warning swalDefaultWarning">Gravar</button>
+                        <a href="@Url.Action("Busca", "Conta")"><input type="button" value="Cancelar" tabindex="14" class="btn btn-danger" data-dismiss="modal" /></a>
+
+                    </div>
+                </div>
+            </form>
+            <!-- /.card -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+
+
+
+    @section scripts{
+        <script type="text/javascript">
+
+        $(document).ready(function () {
+            debugger
+
+            var vid = $('#id').val();
+
+            if (vid > 0) { $('#email').attr('readonly', true); }
+            else { $('#email').attr('readonly', false); }
+
+            $('#nome').on('change', function () { validaCampos(); });
+            $('#login').on('change', function () { validaCampos(); });
+            $('#email').on('change', function () { validaCampos(); return false; });
+            $('#celular').on('change', function () { validaCampos(); });
+            $('#senha').on('change', function () { validaCampos(); });
+            $('#senhaconfirmar').on('change', function () { validaCampos(); });
+            $('#supervisor').on('change', function () { validaCampos(); });
+            $('#situacao').on('change', function () { validaCampos(); });
+            document.getElementById("nome").focus();
+
+        });
+
+        function validaCampos() {
+
+            validaCheck();
+
+            var vSenha = $("#senha").val();
+            var vSenhaConfirmar = $("#senhaconfirmar").val();
+            var Ok = true;
+
+            document.getElementById('nome').style.background = "#FFFFFF";
+            document.getElementById('login').style.background = "#FFFFFF";
+
+            if ($("#email").attr('readonly') == false) {
+                document.getElementById('email').style.background = "#FFFFFF";
+            }
+
+            document.getElementById('celular').style.background = "#FFFFFF";
+            document.getElementById('senha').style.background = "#FFFFFF";
+            document.getElementById('senhaconfirmar').style.background = "#FFFFFF";
+            document.getElementById('situacao').style.background = "#FFFFFF";
+
+            if (document.getElementById("nome").value == "") {
+                validaMensagem('Preencha o campo nome.');
+                document.getElementById('nome').style.background = "#ffc107";
+                Ok = false;
+            }
+
+            if (document.getElementById("login").value.length < 4) {
+                validaMensagem('Preencha o campo login.');
+                document.getElementById('login').style.background = "#ffc107";
+                Ok = false;
+            }
+
+            if (document.getElementById("email").value.length < 8) {
+                validaMensagem('Preencha o campo email corretamente.');
+                document.getElementById('email').style.background = "#ffc107";
+                Ok = false;
+            }
+
+            if (document.getElementById("celular").value.length < 13) {
+                validaMensagem('Preencha o campo do telefone ou celular.');
+                document.getElementById('celular').style.background = "#ffc107";
+                Ok = false;
+            }
+
+            if (document.getElementById("senha").value.length < 4) {
+                validaMensagem('A senha deve ter entre 6 e 12 caracteres');
+                document.getElementById('senha').style.background = "#ffc107";
+                Ok = false;
+            }
+
+            if (document.getElementById("senhaconfirmar").value.length < 4) {
+                validaMensagem('A senha deve ter entre 6 e 12 caracteres.');
+                document.getElementById('senhaconfirmar').style.background = "#ffc107";
+                Ok = false;
+            }
+            else {
+                if (vSenha != vSenhaConfirmar) {
+                    validaMensagem('As senhas são diferentes.');
+                    document.getElementById('senhaconfirmar').style.background = "#dc3545";
+                    Ok = false;
+                }
+            }
+
+            if (document.getElementById("situacao").value == "") {
+                validaMensagem('Necessário selecionar uma situação.');
+                document.getElementById('situacao').style.background = "#ffc107";
+                Ok = false;
+            }
+
+            if (Ok == true) { validaMensagem('Registro gravado com Sucesso!'); } else { return false; }
+        }
+
+        function validaCheck() {
+            // Necessario para não vir valor " On " ligado no checkbox ao selecionar
+            var isChecked = $('#supervisor').is(':checked');
+            if (isChecked) { $('#supervisor').val("true"); } else { $('#supervisor').val("false"); }
+        }
+
+        </script>
+    }

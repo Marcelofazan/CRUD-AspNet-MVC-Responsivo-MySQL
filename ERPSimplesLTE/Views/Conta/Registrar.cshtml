@@ -1,0 +1,160 @@
+﻿@model ERPSimplesLTE.Models.Usuario
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registrar</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../adminlte/plugins/fontawesome-free/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="../adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../adminlte/css/adminlte.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../adminlte/plugins/fontawesome-free/css/all.min.css">
+</head>
+<body class="hold-transition register-page">
+    @if (!string.IsNullOrEmpty(ViewBag.RetornoEmailJaCadastrado))
+    {
+        <script type="text/javascript">
+            alert("@ViewBag.RetornoEmailJaCadastrado");
+            document.getElementById('senhaconfirmar').focus();
+            document.getElementById('senhaconfirmar').style.background = "#ff6961";
+        </script> }
+    else
+    {
+        <script type="text/javascript">
+            document.getElementById('senhaconfirmar').style.background = "#ffffff";
+        </script> 
+    }
+
+    @if (!string.IsNullOrEmpty(ViewBag.RetornoComparaSenha))
+    {
+        <script type="text/javascript">
+            alert("@ViewBag.RetornoComparaSenha");
+        </script>
+    }
+
+<div class="register-box">
+    <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+            <a href="#" class="h1"><b>Admin</b>LTE</a>
+        </div>
+        <div class="card-body">
+            <p class="login-box-msg">Registro novo usuário</p>
+
+            <form name="frmpadrao">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Digite o nome completo" name="nome" id="nome" size="80" maxlength="80">
+                    <input type="hidden" class="form-control" placeholder="Licenca" name="situacao" id="situacao" >
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="email" class="form-control" placeholder="Digite seu email" name="email" id="email" size="120" maxlength="120">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" placeholder="Digite sua senha" name="senha" id="senha" size="12" minlength="6" maxlength="12" >
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" placeholder="Digite novamente a senha" name="senhaconfirmar" id="senhaconfirmar" size="12" minlength="6" maxlength="12" >
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                        <div class="icheck-primary">
+                            <input type="checkbox" id="agreeTerms" name="terms" value="agree">
+                            <label for="agreeTerms">
+                                Eu concordo com os <a href="#">Termos</a>
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-4">
+                        <button type="submit" id="btnRegistrar" name="btnRegistrar" class="btn btn-primary btn-block">Registrar</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+
+            <div class="social-auth-links text-center">
+                <a href="#" class="btn btn-block btn-primary">
+                    <i class="fab fa-facebook mr-2"></i>
+                    Sign up using Facebook
+                </a>
+                <a href="#" class="btn btn-block btn-danger">
+                    <i class="fab fa-google-plus mr-2"></i>
+                    Sign up using Google+
+                </a>
+            </div>
+            <a href="@Url.Action("Login", "Conta")" class="nav-link active">Eu já tenho uma conta</a>
+        </div>
+        <!-- /.form-box -->
+    </div><!-- /.card -->
+</div>
+
+<!-- jQuery -->
+<script src="../adminlte/plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="../adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="../adminlte/js/adminlte.min.js"></script>
+
+<script type="text/javascript">
+
+            $('#btnRegistrar').click(function () {
+                debugger
+
+                var vNome = $("#nome").val();
+                var vEmail = $("#email").val(); 
+                var vSenha = $("#senha").val();
+                var vSenhaConfirmar = $("#senhaconfirmar").val();
+                var vSituacao = $("#situacao").val(2); // Situacao Liberado ao se cadastrar 
+
+                RegistrarUsuario(vNome, vEmail, vSenha, vSenhaConfirmar, vSituacao);
+            });
+
+            function RegistrarUsuario(sNome, sEmail, sSenha, sSenhaConfirmar, sSituacao) {
+                debugger
+
+                $.post('@Url.Content("~/Conta/Registrar")' + '?nome:' + sNome, '?email:' + sEmail, '?senha:' + sSenha, '?senhaconfirmar:' + sSenhaConfirmar, '?situacao:' + sSituacao,
+                function (data) {
+                    if (data) {
+                        console.log(data);
+                        Mensagem = data.existemail;
+                        alert(Mensagem);
+                    }
+
+                });
+
+            }
+
+</script>
+
+</body>
+</html>

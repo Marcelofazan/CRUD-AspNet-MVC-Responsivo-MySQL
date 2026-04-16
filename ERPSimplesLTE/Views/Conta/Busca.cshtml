@@ -1,0 +1,160 @@
+﻿@model  IEnumerable<ERPSimplesLTE.Models.Usuario>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1><a href="@Url.Action("Formulario","Conta", new { Id = 0 })" class="btn btn-sm btn btn-secondary">Novo Usuário</a></h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">DataTables</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Usuarios</h3>
+                    </div>
+
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example2" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Email:</th>
+                                    <th>Nome:</th>
+                                    <th>Login:</th>
+                                    <th>Celular:</th>
+                                    <th>Ultimo Login:</th>
+                                    <th>Data Cadastro:</th>
+
+
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ var x = 0;}
+                                @foreach (var item in Model)
+                                {
+                                    x++;
+                                <tr>
+                                    <td>@item.Email</td>
+                                    <td>@item.Nome</td>
+                                    <td>@item.Login</td>
+                                    <td>@item.Celular</td>
+                                    <td>@item.UltimoLogin</td>
+                                    <td>@item.DataCadastro</td>
+
+                                    <td>
+                                        <a href="@Url.Action("Formulario", "Conta", new { Id = item.Id })" class="btn btn-info fa fa-edit"></a>
+                                        <button data-toggle="modal" data-target="#modal-danger" class="btn btn-danger delete fas fa-trash" data-id="@item.Id"></button>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+
+<div class="modal fade " id="modal-danger">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-danger">
+            <div class="modal-header">
+                <h4 class="modal-title">Excluir Registro</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Deseja realmente excluir esse registro ?</p>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-outline-light" data-dismiss="modal" value="cancel" >Cancelar</button>
+                <button type="button" class="btn btn-outline-light" id="BtnDelete" name="BtnDelete" >Confirmar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+@section scripts{
+    <script type="text/javascript">
+        debugger
+        $(document).on('click', '.delete', function () {
+            var id = $(this).attr("data-id");
+            $('#modal-danger').find('.modal-footer #BtnDelete').on('click', function () {
+                debugger
+                var vDeletar = Deletar(id);
+                if (vDeletar = true) {
+                    location.reload();
+                }
+                else {
+                    return false;
+                }
+            });
+        });
+
+        $(function () {
+            $('#example2').DataTable({
+                "responsive": true,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "responsive": true,
+            }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
+        });
+
+
+           function Deletar(vid) {
+               debugger
+
+               $.ajax({
+                    type: "POST",
+                    url: '@Url.Content("~/Conta/Excluir")',
+                    data: { Id: vid },
+                    async: false,
+                    success: function (data, textStatus, jqXHR) {
+                        console.log(data);
+                        alert(data);
+                        return true;
+
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            alert('errorThrown: ' + errorThrown);
+                            return false; 
+                        }
+                    });
+               }
+    </script>
+}

@@ -1,0 +1,98 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Contato";
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../adminlte/plugins/fontawesome-free/css/all.min.css">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../adminlte/css/adminlte.min.css">
+
+    <!-- summernote -->
+    <link rel="stylesheet" href="../adminlte/plugins/summernote/summernote-bs4.min.css">
+
+    <!-- SimpleMDE -->
+    <link rel="stylesheet" href="../adminlte/plugins/simplemde/simplemde.min.css">
+
+}
+
+<h3>@ViewBag.Message</h3>
+<div class="col-lg-8 py-4">
+    <div class="info-box">
+        @using (Html.BeginForm())
+        {
+            <h5>
+                <i class="fa fa-link" aria-hidden="true"></i>
+                <a href="http://summernote.org/">Pluggin SummerNote</a>
+            </h5>
+
+            <div class="form-group">
+                @Html.Label("Digite seu Nome")
+                @Html.TextBox("CustomerName", null, new { @class = "form-control", @style = "width:200px" })
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-outline card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                Summernote
+                            </h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <textarea id="summernote"> Place <em>some</em> <u>text</u> <strong>here</strong> </textarea>
+                        </div>
+                        <div class="card-footer">
+                            Visit <a href="https://github.com/summernote/summernote/">Summernote</a> documentation for more examples and information about the plugin.
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-->
+            </div> <!-- ./row -->
+
+            <div class="box-footer">
+                <button class="btn btn-primary" type="submit">Enviar</button>
+            </div>}
+    </div>
+</div>
+
+<address>
+    One Microsoft Way<br />
+    Redmond, WA 98052-6399<br />
+    <abbr title="Phone">P:</abbr>
+    425.555.0100
+</address>
+
+<address>
+    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
+    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+</address>
+
+
+@section scripts {
+
+    <!-- jQuery -->
+    <script src="../adminlte/plugins/jquery/jquery.min.js"></script>
+    <!-- Summernote -->
+    <script src="../adminlte/plugins/summernote/summernote-bs4.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            debugger
+            $('#summernote').summernote(
+                {
+                    height: 300,
+                    minHeight: null,
+                    maxHeight: null,
+                    focus: true
+                });
+        });
+
+    </script>
+}

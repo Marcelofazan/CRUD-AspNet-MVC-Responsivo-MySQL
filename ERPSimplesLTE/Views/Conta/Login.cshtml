@@ -1,0 +1,151 @@
+﻿@model ERPSimplesLTE.Models.Usuario
+
+@{
+    Layout = null;
+}
+
+@if (TempData["LoginInvalido"] != "")
+{
+    <script>
+        alert('@Html.Raw(TempData["LoginInvalido"])')
+    </script>
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="../adminlte/plugins/fontawesome-free/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="../adminlte/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../adminlte/css/adminlte.min.css">
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="../adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="../adminlte/plugins/toastr/toastr.min.css">
+    <!-- BootStrap-fs-modal -->
+    <link rel="stylesheet" href="../adminlte/plugins/bootstrap-fs-modal/css/bootstrap-fs-modal.css">
+
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <!-- /.login-logo -->
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <a href="#" class="h1"><b>Admin</b>LTE</a>
+            </div>
+            <div class="card-body">
+                <p class="login-box-msg">Faça login para iniciar sua sessão</p>
+
+                <form name="frmpadrao" action="~/Conta/Login" method="post" onsubmit="javascript: return validaCampos();">
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Digite seu email" name="email" id="email" size="120" maxlength="120">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" placeholder="Digite sua senha" name="senha" id="senha" size="12" minlength="6" maxlength="12">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="lembrarme" name="lembrarme" tabindex="7" >
+                                <label for="lembrarme">Lembrar-me</label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button type="submit" id="btnEntrar" name="btnEntrar" class="btn btn-primary btn-block swalDefaultWarning">Entrar</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+                <div class="social-auth-links text-center mt-2 mb-3">
+                    <a href="#" class="btn btn-block btn-primary">
+                        <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+                    </a>
+                    <a href="#" class="btn btn-block btn-danger">
+                        <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+                    </a>
+                </div>
+                <!-- /.social-auth-links -->
+
+                <p class="mb-1">
+                    <a href="@Url.Action("RecuperarSenha", "Conta")" class="nav-link active">Esqueci minha senha</a>
+                </p>
+                <p class="mb-0">
+                    <a href="@Url.Action("Registrar", "Conta")" class="nav-link active">Registrar novo usuário</a>
+                </p>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+
+    <!-- FuncoesJS-->
+    <script src="../Scripts/FuncoesJS.js"></script>
+    <!-- jQuery -->
+    <script src="../adminlte/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="../adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="../adminlte/js/adminlte.min.js"></script>
+    <!-- bs-custom-file-input -->
+    <script src="../adminlte/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="../adminlte/plugins/sweetalert2/sweetalert2.min.js"></script>
+    <!-- Toastr -->
+    <script src="../adminlte/plugins/toastr/toastr.min.js"></script>
+
+    <script type="text/javascript">
+        debugger
+        $(document).ready(function () {
+            debugger
+            $('#email').on('change', function () { validaCampos(); return false; });
+            $('#senha').on('change', function () { validaCampos(); });
+            document.getElementById("email").focus();
+        })
+
+
+        function validaCampos() {
+            debugger
+            var Ok = true;
+
+            document.getElementById('email').style.background = "#FFFFFF";
+            document.getElementById('senha').style.background = "#FFFFFF";
+
+            if (document.getElementById("email").value.length < 8) {
+                validaMensagem('Preencha o campo email corretamente.');
+                document.getElementById('email').style.background = "#ffc107";
+                Ok = false;
+            }
+
+            if (document.getElementById("senha").value.length < 4) {
+                document.getElementById('senha').style.background = "#ffc107";
+                Ok = false;
+            }
+
+            if (Ok == true) { return true; } else { return false; }
+        }
+
+    </script>
+</body>
+</html>
+

@@ -1,4 +1,5 @@
-adminlte/Scripts/* linguist-vendored
-adminlte/Content/* linguist-vendored
+Scripts/* linguist-language=C#
+Content/* linguist-language=C#
+pasta/arquivo.js linguist-language=C#
 *.cshtml linguist-language=C#
 * text=auto

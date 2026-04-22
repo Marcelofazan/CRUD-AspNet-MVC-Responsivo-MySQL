@@ -20,11 +20,12 @@ Ficara com a seguinte estrutura:
 
 **Solution** Pasta na Raiz do Projeto 
 ```
-| --- adminlte
-     |-------- css
-     |---------img 
-     |---------js
-     |---------plugins
+adminlte
+|-------|
+        |-------| /css
+        |-------| /img 
+        |-------| /js
+        |-------| /plugins
 ```
 
 ## O que você vai encontrar neste projeto

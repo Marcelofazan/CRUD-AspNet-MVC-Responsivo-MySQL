@@ -30,9 +30,8 @@ adminlte
 
 ## O que você vai encontrar neste projeto
 
-- **AdminLTE** - Layout Responsivo JavaScript e uso de bibliotecas (Plugins). 
-- **Dicionário de Dados** - Armazenamento de coleções de pares (chave-valor), permitindo busca e recuperação de dados.
-- **DataTable** - Tabelas de dados em formato Bootstrap .
+- **AdminLTE** - Template de painel administrativo (Dashboard) de código aberto construído com o framework Bootstrap.
+- **Dicionário de Dados** -Armazenamento de coleções de pares (chave-valor), permitindo busca e recuperação de dados.
 
 ## Execução da aplicação
 
